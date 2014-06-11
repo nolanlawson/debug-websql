@@ -2,19 +2,28 @@
 
 var argsarray = require('argsarray');
 
+function createTransaction(db, readonly, args) {
+  var transactionMethod = db[readonly ? 'readTransaction' : 'transaction'];
+  var transaction = transactionMethod.apply(db, args);
+  var prefix = readonly ? 'readTransaction' : 'r/w transaction';
+  return {
+    executeSql : function (sql, sqlArgs, success, failure) {
+      console.log(prefix + ': ' + sql + (sqlArgs ? ' with args ' + JSON.stringify(sqlArgs) : ''));
+      return transaction.executeSql(sql, sqlArgs, success, failure);
+    }
+  };
+}
 if (process && process.browser && global.openDatabase) {
   var oldOpenDatabase = global.openDatabase;
   global.openDatabase = argsarray(function (args) {
     var db = oldOpenDatabase.apply(null, args);
     return {
-      transaction : function (sql, sqlArgs, success, failure) {
-        console.log('r/w transaction: ' + sql + (sqlArgs ? ' with args ' + JSON.stringify(sqlArgs) : ''));
-        return db.transaction(sql, sqlArgs, success, failure);
-      },
-      readTransaction : function (sql, sqlArgs, success, failure) {
-        console.log('readTransaction: ' + sql + (sqlArgs ? ' with args ' + JSON.stringify(sqlArgs) : ''));
-        return db.transaction(sql, sqlArgs, success, failure);
-      }
+      transaction : argsarray(function (args) {
+        return createTransaction(db, false, args);
+      }),
+      readTransaction : argsarray(function (args) {
+        return createTransaction(db, true, args);
+      })
     };
   });
 }
