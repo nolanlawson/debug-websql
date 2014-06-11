@@ -1,0 +1,33 @@
+{
+  "name": "debug-websql",
+  "version": "0.1.0",
+  "description": "Simple script to console.log every SQL query received by Web SQL in supported browsers (Chrome, Safari).",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify index.js -o dist/debug-websql.js",
+    "jshint": "jshint index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nolanlawson/debug-websql.git"
+  },
+  "keywords": [
+    "websql",
+    "debug",
+    "web",
+    "sql"
+  ],
+  "author": "Nolan Lawson <nolan.lawson@gmail.com>",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/nolanlawson/debug-websql/issues"
+  },
+  "homepage": "https://github.com/nolanlawson/debug-websql",
+  "dependencies": {
+    "argsarray": "0.0.1",
+    "browserify": "^4.1.9"
+  },
+  "devDependencies": {
+    "jshint": "^2.5.1"
+  }
+}
