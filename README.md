@@ -4,13 +4,23 @@ Debug WebSQL
 Simple script that logs every WebSQL SQL query to console.log.  Include it in your browser
 scripts (e.g. with browserify, or using the browserified `dist/debug-websql.js` file) and it'll work right away.
 
-Format:
+Installation
+-----
+
+    $ npm install debug-websql
+
+Format
+--------
 
 ```
 <dbname>: <readTransaction|r/w transaction> #<transactionId>: <sql> with args <args>
 ```
 
-Sample output (from the [PouchDB](https://github.com/pouchdb/pouchdb)) test suite:
+Sample
+-------
+
+
+Sample output from the [PouchDB](https://github.com/pouchdb/pouchdb) test suite:
 
 ```
 _pouch_test_basics: r/w transaction #1: SELECT sql FROM sqlite_master WHERE tbl_name = 'metadata-store' with args []
